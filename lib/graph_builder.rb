@@ -74,8 +74,11 @@ module GraphBuilder
       prop(graph, uri, SCHEMA.givenName, obj[:givenName]) 
       prop(graph, uri, SCHEMA.nationality, obj[:nationality])
 
-      gender = obj[:gender].downcase == "male" ? SCHEMA.Male : obj[:gender].downcase == "female" ? SCHEMA.Female : obj[:gender]
-      prop(graph, uri, SCHEMA.gender, gender)    
+      if obj[:gender]
+        gender = obj[:gender].downcase == "male" ? SCHEMA.Male : obj[:gender].downcase == "female" ? SCHEMA.Female : obj[:gender]
+        prop(graph, uri, SCHEMA.gender, gender)    
+      end
+      
     elsif obj[:entityType] == "Organization"
       prop(graph, uri, SCHEMA.dissolutionDate, make_date(obj[:deathDate]))    
       prop(graph, uri, SCHEMA.foundingLocation, obj[:birthPlace])

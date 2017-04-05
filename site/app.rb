@@ -37,12 +37,22 @@ class MicroAuthority < Sinatra::Base
   ## Load the CSV File into memory
   def self.load_csv
     obj = {}
+    csv_opts =  {
+              encoding: "UTF-8:UTF-8", 
+              headers: true, 
+              row_sep: :auto, 
+              header_converters: :symbol, 
+              converters: :all
+            }
     time = Benchmark.realtime do
-      CSV.foreach("./data/#{settings.config["csv_file_name"]}", headers:true)
-      .sort_by{|row| row["sortName"] || row["name"]}
+
+      CSV.foreach("./data/#{settings.config["csv_file_name"]}",  csv_opts)
+      .sort_by{|row| (row["sortName"] || row["name"])}
       .each do |row|
-        row["entityType"] ||= "Person"
-        obj[row["id"].to_i] = row.to_h.delete_if { |k, v| v.nil? }.symbolize_keys
+        row[:entityType] ||= "Person"
+        value = row.to_h.delete_if { |k, v| v.nil? }
+        key = value[:id]
+        obj[key] = value
       end
     end
     puts "Loaded CSV in #{time.round(4)} seconds"
