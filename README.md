@@ -12,6 +12,17 @@ This has only been tested on datasets in the ~20,000 row size as of yet—it sho
 
 *(These instructions are for people famillar with the process of installing Ruby software from Github.  If this doesn't make sense, move on to the next section.)* 
 
+```
+git clone git@github.com:arttracks/microauthority.git
+cd microauthority
+bundle install
+# Modify the `data/data.csv file before running the next two commands
+rake sitemap:create
+foreman start
+```
+
+Or, with slightly more context:
+
 1. [Fork](https://github.com/arttracks/microauthority) and clone the repository. 
 2. Modify the `data/data.csv` file to reflect your data.  Don't worry about missing data for columns—you don't have to fill them all in.  The only required fields are `id` and `name`.  Order doesn't matter.  
 3. Edit the `config/settings.yaml` file to add institution specific information.
