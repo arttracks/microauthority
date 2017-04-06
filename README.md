@@ -15,6 +15,7 @@ This has only been tested on datasets in the ~20,000 row size as of yet—it sho
 ```
 git clone git@github.com:arttracks/microauthority.git
 cd microauthority
+gem install bundler foreman
 bundle install
 # Modify the `data/data.csv file before running the next two commands
 rake sitemap:create
@@ -66,7 +67,7 @@ We're going to be using the Terminal, also known as "the command line".  This is
 
 You'll need to open up **Terminal** on your computer, and then you're going to change Terminal's "working directory" to `microauthority`.  This is the same as opening the folder in Finder—it tells the computer that any files it needs and any commands you run should be done in the context of that folder. To do this, we need to use the command `cd`, or **c**hange **d**irectory.  
 
-The command
+The command:
 
 ```
 cd microauthority
@@ -78,7 +79,71 @@ You should do this, because the rest of the commands that we'll be typing will a
 
 #### Installing Dependencies
 
-*(WIP— continue writing from here, David.)*
+MicroAuthority is written using the [Ruby](http://www.rubylang.org) programming language.  MicroAuthority is also somewhat picky about the exact version of ruby that it works on.  You can install there are instructions on how best to install Ruby [on the Ruby website], and many people use a program called [rvm](???????), or **R**uby **V**ersion **M**anager to, you know, manage versions of Ruby.  You don't *need* to use RVM, but if you're having issues getting Ruby installed, it might be worth looking into.
+
+One you have a copy of Ruby installed and configured, you need to install [Bundler](????????).  Bundler is a tool designed to download and install all the *other* libraries and related bits of software that you need to get Ruby software working.  (It's probably worth mentioning that Ruby software libraries are called Gems.  There's a fair amount of [whimsy](???????) in the Ruby community, which is one of the reasons I write software in it.)
+
+To install bundler, you need to use a tool called `gem` that comes with Ruby.  (Yes.  You have installed a tool that will help you install a tool that helps you install tools.  This is *noticeably* better than it used to be—in fact, Ruby's dependency management system is famously *good*.   I'll allow you a moment to shudder when you consider what a bad dependency mamagement system might look like.)
+
+on the command line, type:
+
+```bash
+gem install bundler
+```
+
+
+It should metaphorically whir and click a bit, and once it's done, you have a copy of Bunder available on your system.
+
+you should also type 
+
+```bash
+gem install foreman
+```
+
+which will install [Foreman](????????), a tool that makes it easier to launch software from the command line.  While `foreman` might be overkill for what you're doing right now, when we go to launch our copy of MicroAuthority on the internet we're going to need to use it, so we might as well use it from the start.
+
+Lastly, we're going to type
+
+```bash
+bundle install
+```
+
+Which will download and install *all the rest* of the libraries that you'll need to use.  
+
+At this point, you have all the software installed on your computer, and you can run MicroAuthority.   However, you haven't given it any data...which means it won't be very interesting.
+
+#### Adding Data to MicroAuthority
+
+MicroAuthority is designed to be easy to use for people who might be data professionals, but are not *database professionals*.  Because of this, it doesn't have a database of any kind.  Instead, when it starts, it reads all the data from a spreadsheet and stores it in the computer's memory.  Thankfully, computers these days have loads of memory, so as long as you're dealing with merely tens of thousands of names, it doesn't cause a problem at all.  If you're dealing with **millions** of names, this won't help you, but if you're dealing with **millions** of names, you're hopefully working on a larger project and know someone you can talk to about how to extend this to work in your situation.
+
+MicroAuthority  will look for a spreadsheet in the `data/` directory called `data.csv`.   It expects it to be a [csv](?????????) file, which is a standard form of spreadsheet data where there are commas between each value.  Excel can export these, as can almost any other tool.
+
+This spreadsheet is should have a header row, which means that the first row or line of the spreadsheet has the **names** of the columns.  All the following rows should have your data in them. 
+
+The spreadsheet is only required to have one column: `name`.  The smallest possible spreadsheet that would work would look like this:
+
+| name     |
+|----------|
+| Jane Doe |
+
+But that's not a very useful list, is it?
+
+The other required column is `id`, but if you don't have one, MicroAuthority will make one up for you using the order of the rows.  I don't recommend letting it do this, though—it works, but it means that if you ever sort your data, or add a row anywhere except the bottom, it will change the ids assigned everything, and that's a **bad thing**.  So don't do that.
+
+Instead, you should have a column named `id`, and the ID should be a **unique identifier**, which means that every one should be different for each row of the spreadsheet. Preferably, these should be numbers, but words work as well—, though to make the urls work well, we turn them into all-lowercase and replace spaces with underscores, as well as some other munging for more esoteric reasons. If you make a mistake with this MicroAuthority will not start, but it *will* give you a helpful message about which `id` is duplicated. 
+
+To help you out, we've provided two example spreadsheets, both in the `data/` directory.  One is `data/example-data.csv`, which is a set of names from the [Carnegie Museum of Art's](???????) data export, and the other one is a very tiny spreadsheet called `data/data.csv`.  This second one is there for you to fill with your list of names.   
+
+If you don't have a list of names, and just want to see how this works, you can change the `csv_file_name` setting in `config/settings.yaml`  from `data.csv` to  `example-data.csv`, which will let you play with a moderately-sized list immediately.  We'll talk more about that settings file later.
+
+
+#### Other 'magic' columns
+
+*(David:  Contiune writing from here.)*
+
+
+
+
 
 One you have a copy of it locally, you should modify the `data/data.csv` file to reflect your own data.  Don't worry about missing data for columns—you don't have to fill them all in.  
 

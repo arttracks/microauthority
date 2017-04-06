@@ -25,6 +25,10 @@ require "./lib/metadata_helper.rb"
 require "./lib/graph_builder.rb"
 require "./lib/vocab_helper.rb"
 
+# Character Encoding Libraries
+require 'charlock_holmes'
+
+
 class MicroAuthority < Sinatra::Base
 
   helpers Sinatra::LinkHeader
@@ -38,7 +42,7 @@ class MicroAuthority < Sinatra::Base
   def self.load_csv
     obj = {}
     csv_opts =  {
-              encoding: "UTF-8:UTF-8", 
+              encoding: "UTF-8", 
               headers: true, 
               row_sep: :auto, 
               header_converters: :symbol, 
@@ -46,9 +50,21 @@ class MicroAuthority < Sinatra::Base
             }
     time = Benchmark.realtime do
 
-      CSV.foreach("./data/#{settings.config["csv_file_name"]}",  csv_opts)
+      id_present = true
+
+      csvContent = File.read("./data/#{settings.config["csv_file_name"]}")
+      detection = CharlockHolmes::EncodingDetector.detect(csvContent)
+      utf8_encoded_content = CharlockHolmes::Converter.convert csvContent, detection[:encoding], 'UTF-8'
+
+      CSV.parse(utf8_encoded_content,  csv_opts)
       .sort_by{|row| (row["sortName"] || row["name"])}
-      .each do |row|
+      .each_with_index do |row, i|
+        row[:id] = (i+1) if row[:id].nil?
+        row[:id] = row[:id].to_s.parameterize.underscore
+        if obj[row[:id]]
+          puts "\n\nERROR:\n\nTwo rows in data.csv both have the same id: '#{row[:id]}'.\nPlease fix this in your data.\nMicroAuthority will not run until you do this.\n\n"
+          exit 1
+        end
         row[:entityType] ||= "Person"
         value = row.to_h.delete_if { |k, v| v.nil? }
         key = value[:id]
@@ -307,7 +323,7 @@ class MicroAuthority < Sinatra::Base
   # Retrieve a record
   #----------------------------------------------------------------------------
    def lookup(id)
-    id_num = id.to_i
+    id_num = id
     settings.data[id_num]
   end
 

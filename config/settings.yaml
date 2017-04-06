@@ -8,8 +8,6 @@ domain: http://microauthority.museumprovenance.org
 # Information about this specific authority
 csv_file_name: data.csv
 
-
 sitemap_notification_urls:
   # google: http://www.google.com/webmasters/tools/ping?sitemap=%s
   # bing:   http://www.bing.com/ping?sitemap=%s 
-
