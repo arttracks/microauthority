@@ -20,7 +20,7 @@
         %p
           <strong>MicroAuthority</strong> creates both HTML & Linked Open Data endpoints for 
           institutional Agent authority files—lists of people, organizations, and groups. 
-          Data is provided by the institution as a CSV file.  <strong>MicroAuthority</strong> automatically creates a unique URI for every row in that CSV file that works as both a <a href="#{url("/1004281.html")}">webpage</a> and as machine-readable <a href="#{url("/1004281.jsonld")}">Linked Open Data</a>. 
+          Data is provided by the institution as a CSV file.  <strong>MicroAuthority</strong> automatically creates a unique URI for every row in that CSV file that works as both a <a href="#{url("/#{@config["sample_record"]}.html")}">webpage</a> and as machine-readable <a href="#{url("/#{@config["sample_record"]}.jsonld")}">Linked Open Data</a>. 
 
     .row.callouts
       .six.columns
@@ -45,7 +45,7 @@
             
           %p
             Try it above, or see the JSON:
-            %a{href: url('/typeahead?q=monet')} /typeahead?q=monet'.
+            %a{href: url("/typeahead?q=#{@config["sample_typeahead"]}")} /typeahead?q=#{@config["sample_typeahead"]}.
 
       .row.callouts
         .six.columns
@@ -54,14 +54,14 @@
             %p
               For each entry, <strong>MicroAuthority</strong> provides a consolidated graph that maps the fields to many common schemas, including #{@vocabs.map{|a| "<span class='vocab' >#{a}</span>"}.join(", ")}.
               Each entry is provided in
-              %a{href: url("/1004281.jsonld")} JSON-LD,
-              %a{href: url("/1004281.ttl")} Turtle,
+              %a{href: url("/#{@config["sample_record"]}.jsonld")} JSON-LD,
+              %a{href: url("/#{@config["sample_record"]}.ttl")} Turtle,
               and
-              %a{href: url("/1004281.rdf")} RDF XML.
+              %a{href: url("/#{@config["sample_record"]}.rdf")} RDF XML.
 
             %p
               We also provide the ability to retrieve each entry's graph per-schema.  Try it:
-              %a{href: url("/1004281.jsonld?vocabs=schema")} /1004281.jsonld?vocabs=schema
+              %a{href: url("/#{@config["sample_record"]}.jsonld?vocabs=schema")} /#{@config["sample_record"]}.jsonld?vocabs=schema
 
 
         .six.columns

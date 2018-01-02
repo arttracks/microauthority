@@ -6,7 +6,9 @@ footer_text: "<strong>MicroAuthority</strong> is a project of the <a href='http:
 domain: http://microauthority.museumprovenance.org
 
 # Information about this specific authority
-csv_file_name: data.csv
+csv_file_name: example-data.csv
+sample_record: 1001035
+sample_typeahead: "monet"
 
 sitemap_notification_urls:
   # google: http://www.google.com/webmasters/tools/ping?sitemap=%s

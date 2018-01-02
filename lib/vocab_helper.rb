@@ -20,6 +20,7 @@ module VocabHelper
     pairs = {}
     graph.each_statement do |statement|
       pred = RDF::Vocabulary.find_term(statement.predicate)
+      puts "pred: #{pred}"
       next unless pred.respond_to? :label
       val = if statement.object.literal?  
         statement.object.to_s 

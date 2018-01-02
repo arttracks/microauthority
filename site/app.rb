@@ -95,13 +95,6 @@ class MicroAuthority < Sinatra::Base
   end
 
 
-  #  Development-Environment-specific configuration
-  configure :development do
-    register Sinatra::Reloader
-    Dir.glob('./lib/**/*') { |file| also_reload file}
-    set :show_exceptions, :after_handler
-  end
-
   # Global configuration
   configure do 
     set :config,    YAML.load_file("./config/settings.yaml")
@@ -110,6 +103,16 @@ class MicroAuthority < Sinatra::Base
     set :data,      load_csv
     set :typeahead, load_typeahead
   end
+
+
+  #  Development-Environment-specific configuration
+  configure :development do
+    register Sinatra::Reloader
+    Dir.glob('./lib/**/*')   { |file| also_reload file}
+    set :show_exceptions, :after_handler
+    puts "\n\n-------------------------------------------------------------\n\n The MicroAuthority server is now running on your computer.\n\n  To view it, open http://localhost:5000 in your browser.\n\n       To quit it, type CTRL-C in this window.  \n\n-------------------------------------------------------------\n\n"
+  end
+
  
 
              #-------------------------------------------------#
@@ -148,8 +151,8 @@ class MicroAuthority < Sinatra::Base
 
   # CSV Data Dump
   #----------------------------------------------------------------------------
-    get "/dump.csv" do
-    attachment
+    get "/bulk.csv" do
+    attachment("bulk.csv")
     File.read("./data/#{settings.config["csv_file_name"]}")
   end
 
@@ -183,7 +186,7 @@ class MicroAuthority < Sinatra::Base
     results = settings.typeahead.find_all{|key,val| key.start_with?(query.downcase)}
     if results
       results = results.reduce([]){|memo,a| memo << a[1]}.flatten.uniq
-      results = results.collect{|id| {value: lookup(id)[:name], id: id}}
+      results = results.collect{|id| puts(id); { value: lookup(id.to_s) ? lookup(id.to_s)[:name] : id, id: id}}
     end
     json results || {}
   end
@@ -372,7 +375,7 @@ class MicroAuthority < Sinatra::Base
     else
       results = results.reduce([]){|memo,a| memo << a[1]}.flatten.uniq
       results = results.collect do |id| 
-        data = lookup(id)
+        data = lookup(id.to_s)
 
         next if obj["type"] && ![obj["type"]].flatten.include?(data[:entityType]) 
 
@@ -420,11 +423,4 @@ class MicroAuthority < Sinatra::Base
     end
   end
 end
-
-
-
-
-
-
-
 

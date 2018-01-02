@@ -79,9 +79,9 @@ You should do this, because the rest of the commands that we'll be typing will a
 
 #### Installing Dependencies
 
-MicroAuthority is written using the [Ruby](http://www.rubylang.org) programming language.  MicroAuthority is also somewhat picky about the exact version of ruby that it works on.  You can install there are instructions on how best to install Ruby [on the Ruby website], and many people use a program called [rvm](???????), or **R**uby **V**ersion **M**anager to, you know, manage versions of Ruby.  You don't *need* to use RVM, but if you're having issues getting Ruby installed, it might be worth looking into.
+MicroAuthority is written using the [Ruby](http://www.rubylang.org) programming language.  MicroAuthority is also somewhat picky about the exact version of ruby that it works on.  You can install there are instructions on how best to install Ruby [on the Ruby website], and many people use a program called [rvm](https://rvm.io), or **R**uby **V**ersion **M**anager to, you know, manage versions of Ruby.  You don't *need* to use RVM, but if you're having issues getting Ruby installed, it might be worth looking into.
 
-One you have a copy of Ruby installed and configured, you need to install [Bundler](????????).  Bundler is a tool designed to download and install all the *other* libraries and related bits of software that you need to get Ruby software working.  (It's probably worth mentioning that Ruby software libraries are called Gems.  There's a fair amount of [whimsy](???????) in the Ruby community, which is one of the reasons I write software in it.)
+One you have a copy of Ruby installed and configured, you need to install [Bundler](http://bundler.io/).  Bundler is a tool designed to download and install all the *other* libraries and related bits of software that you need to get Ruby software working.  (It's probably worth mentioning that Ruby software libraries are called Gems.  There's a fair amount of [whimsy](http://poignant.guide/) in the Ruby community, which is one of the reasons I write software in it.)
 
 To install bundler, you need to use a tool called `gem` that comes with Ruby.  (Yes.  You have installed a tool that will help you install a tool that helps you install tools.  This is *noticeably* better than it used to be—in fact, Ruby's dependency management system is famously *good*.   I'll allow you a moment to shudder when you consider what a bad dependency mamagement system might look like.)
 
@@ -100,7 +100,7 @@ you should also type
 gem install foreman
 ```
 
-which will install [Foreman](????????), a tool that makes it easier to launch software from the command line.  While `foreman` might be overkill for what you're doing right now, when we go to launch our copy of MicroAuthority on the internet we're going to need to use it, so we might as well use it from the start.
+which will install [Foreman](https://github.com/ddollar/foreman), a tool that makes it easier to launch software from the command line.  While `foreman` might be overkill for what you're doing right now, when we go to launch our copy of MicroAuthority on the internet we're going to need to use it, so we might as well use it from the start.
 
 Lastly, we're going to type
 
@@ -116,7 +116,7 @@ At this point, you have all the software installed on your computer, and you can
 
 MicroAuthority is designed to be easy to use for people who might be data professionals, but are not *database professionals*.  Because of this, it doesn't have a database of any kind.  Instead, when it starts, it reads all the data from a spreadsheet and stores it in the computer's memory.  Thankfully, computers these days have loads of memory, so as long as you're dealing with merely tens of thousands of names, it doesn't cause a problem at all.  If you're dealing with **millions** of names, this won't help you, but if you're dealing with **millions** of names, you're hopefully working on a larger project and know someone you can talk to about how to extend this to work in your situation.
 
-MicroAuthority  will look for a spreadsheet in the `data/` directory called `data.csv`.   It expects it to be a [csv](?????????) file, which is a standard form of spreadsheet data where there are commas between each value.  Excel can export these, as can almost any other tool.
+By default, MicroAuthority will look for a spreadsheet in the `data/` directory called `data.csv`.   It expects it to be a [csv](https://en.wikipedia.org/wiki/Comma-separated_values) file, which is a standard form of spreadsheet data where there are commas between each value.  Excel can export these, as can almost any other tool.
 
 This spreadsheet is should have a header row, which means that the first row or line of the spreadsheet has the **names** of the columns.  All the following rows should have your data in them. 
 
@@ -132,7 +132,7 @@ The other required column is `id`, but if you don't have one, MicroAuthority wil
 
 Instead, you should have a column named `id`, and the ID should be a **unique identifier**, which means that every one should be different for each row of the spreadsheet. Preferably, these should be numbers, but words work as well—, though to make the urls work well, we turn them into all-lowercase and replace spaces with underscores, as well as some other munging for more esoteric reasons. If you make a mistake with this MicroAuthority will not start, but it *will* give you a helpful message about which `id` is duplicated. 
 
-To help you out, we've provided two example spreadsheets, both in the `data/` directory.  One is `data/example-data.csv`, which is a set of names from the [Carnegie Museum of Art's](???????) data export, and the other one is a very tiny spreadsheet called `data/data.csv`.  This second one is there for you to fill with your list of names.   
+To help you out, we've provided two example spreadsheets, both in the `data/` directory.  One is `data/example-data.csv`, which is a set of names from the [Carnegie Museum of Art's data export](https://github.com/cmoa/collection), and the other one is a very tiny spreadsheet called `data/data.csv`.  This second one is there for you to fill with your list of names.   
 
 If you don't have a list of names, and just want to see how this works, you can change the `csv_file_name` setting in `config/settings.yaml`  from `data.csv` to  `example-data.csv`, which will let you play with a moderately-sized list immediately.  We'll talk more about that settings file later.
 
@@ -158,6 +158,36 @@ foreman start
 
 There is no database used for this project and no additional software needed.  I recommend deploying it to something like Heroku—there's not a lot of dependencies involved.
 
+If you update the data, you'll need to kill the website and restart it.
+
+
+---
+
+
+
+Explanation of how to use this.
+
+The header matters.
+
+This is best done in excel.
+
+
+Authority File:  Database
+Controlled Vocabulary/Standardized Vocabulary
+
+Subject Heading/Keyword Search
+
+A way to get information speaking the same language.
+  - They're talking about linking as the core value
+  - Cornell/Columbia Linked Data
+
+API is a way to get data from a set of pages.
+
+Not sure of APIs and Linked Data
+
+Duplicatse?
+
+---
 
 
 ## Credit and the Like

@@ -44,7 +44,6 @@
         "required": true,
         "valueUrl": "schema:{entityType}",
         "propertyUrl": "rdf:type"
-
       },
       {
         "titles": "givenName",
@@ -62,11 +61,13 @@
         "titles": "alternateName",
         "separator": "|"
       },
-      {"titles": "gender",
+      {
+        "titles": "gender",
         "separator": "|",
         "propertyUrl": "schema:gender"
       },
       {
+        "name": "birthDate",
         "titles": "birthDate",
         "datatype": "date",
         "propertyUrl": "schema:birthDate"
@@ -140,4 +141,3 @@
     ]
   }
 }
-
